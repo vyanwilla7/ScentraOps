@@ -8,6 +8,7 @@ import MasterDataView from "../features/master-data/MasterDataView.jsx";
 import TransactionsView from "../features/transactions/TransactionsView.jsx";
 import ProfitView from "../features/profit/ProfitView.jsx";
 import SettingsView from "../features/settings/SettingsView.jsx";
+import { Icon } from "../shared/ui/Icons.jsx";
 import { ROLE_LABELS, viewsForUser } from "./navigation.js";
 
 export default function App() {
@@ -79,6 +80,7 @@ export default function App() {
     master: <MasterDataView {...shared} />,
     settings: <SettingsView {...shared} />
   }[current.id];
+  const initial = (user.displayName || user.username || "?").trim().charAt(0).toUpperCase();
 
   return (
     <div className="shell">
@@ -99,26 +101,34 @@ export default function App() {
               aria-current={item.id === current.id ? "page" : undefined}
               onClick={() => setView(item.id)}
             >
-              {item.label}
+              <Icon name={item.id} />
+              <span>{item.label}</span>
             </button>
           ))}
         </nav>
         <div className="account">
-          <p className="eyebrow">SESI AKTIF</p>
-          <strong>{user.displayName}</strong>
-          <span>{ROLE_LABELS[user.role] ?? user.role} · {user.username}</span>
-          <button type="button" className="button ghost small" onClick={handleLogout}>Keluar</button>
+          <div className="account-row">
+            <span className="avatar" aria-hidden="true">{initial}</span>
+            <div className="account-info">
+              <strong>{user.displayName}</strong>
+              <span>{ROLE_LABELS[user.role] ?? user.role}</span>
+            </div>
+          </div>
+          <button type="button" className="button ghost small logout" onClick={handleLogout}>
+            <Icon name="logout" size={15} />
+            Keluar
+          </button>
         </div>
       </aside>
       <div className="workspace">
         <header className="page-head">
           <div>
-            <p className="eyebrow">SCENTRA PARFUME</p>
+            <p className="crumb">Scentra Parfume</p>
             <h1>{current.label}</h1>
           </div>
-          <span className="pill pill-info">Data sintetis</span>
+          <span className="pill pill-info pill-dot">Data sintetis</span>
         </header>
-        <main className="page-body">{content}</main>
+        <main className="page-body" key={current.id}>{content}</main>
       </div>
     </div>
   );

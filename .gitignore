@@ -5,3 +5,7 @@ coverage/
 .env.*
 !.env.example
 *.log
+node_modules/
+.env
+dist/
+.DS_Store

@@ -26,7 +26,13 @@ export default function LoginView({ notice, onLogin }) {
   return (
     <div className="login-shell">
       <main className="login-card">
-        <p className="eyebrow">SCENTRA PARFUME · SIMULASI</p>
+        <div className="login-brand">
+          <div className="brand-mark" aria-hidden="true">S</div>
+          <div>
+            <strong>ScentraOps</strong>
+            <span>Scentra Parfume (versi simulasi)</span>
+          </div>
+        </div>
         <h1>Masuk ke ScentraOps</h1>
         <p className="muted">Asisten CS dan analisis laba kontribusi untuk tim operasional.</p>
         {notice && <Alert tone="warn">{notice}</Alert>}
@@ -45,7 +51,7 @@ export default function LoginView({ notice, onLogin }) {
         </form>
         {state.status === "error" && <Alert>{state.message}</Alert>}
         <div className="demo-accounts">
-          <p className="eyebrow">AKUN DEMO LOKAL</p>
+          <p className="eyebrow">Akun demo lokal</p>
           <div className="chip-row">
             {DEMO_ACCOUNTS.map((account) => (
               <button key={account.username} type="button" className="chip" onClick={() => setForm({ username: account.username, password: "demo123" })}>
